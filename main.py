@@ -1,21 +1,19 @@
 import pygame as py
 from player import dino_group
 from background import ground_group, cloud_group, renderCloud
-from other import Gravity 
+from constants import updateMessage, colisionEnemies, restart
 
-import Obstacle.generatorObst as ob
+from config import (width, heigth, color, FPS)
 
+from generator import (generatorObstacle, cactus_group, 
+ptera_group, spike_group)
 
 
 py.init()
 
-width = 800
-heigth = 600
-FPS = 30
-
-Cor = {"Preto":(0,0,0),"Branco":(255,255,255)}
-
 screen = py.display.set_mode((width, heigth))
+
+    
 
 
 
@@ -27,24 +25,24 @@ while True:
         if event.type == py.QUIT:
             py.quit()
 
-    renderCloud()
-    Gravity()
+    screen.fill(color["Black"])
     
-    ob.generatorObstacle()
-    
+    renderCloud()  
+    generatorObstacle()
+    updateMessage(screen)
+    colisionEnemies()
+    restart(screen)
 
-    screen.fill(Cor["Preto"])
-
-    ob.cactus_group.update()
-    ob.ptera_group.update()
+    cactus_group.update()
+    ptera_group.update()
     dino_group.update()
     ground_group.update()
     cloud_group.update()
-    ob.spike_group.update()
+    spike_group.update()
     
-    ob.spike_group.draw(screen)
-    ob.cactus_group.draw(screen)
-    ob.ptera_group.draw(screen)
+    spike_group.draw(screen)
+    cactus_group.draw(screen)
+    ptera_group.draw(screen)
     ground_group.draw(screen)
     dino_group.draw(screen)
     cloud_group.draw(screen)

@@ -1,10 +1,7 @@
 import pygame as py
 from random import choice, randrange
 
-width = 800
-heigth = 600
-
-Velocity = 5
+from config import Velocity, width, heigth 
 
 img = (0,1,2,3)
 class Ground(py.sprite.Sprite):

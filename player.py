@@ -1,46 +1,69 @@
 import pygame as py
 
+from config import Velocity, spriteSwap
 
 class Dinossauro(py.sprite.Sprite):
     def __init__(self):
         py.sprite.Sprite.__init__(self)
         self.imagens = [py.image.load('assets/sprites/1.png'),
                         py.image.load('assets/sprites/2.png')]
-        self.imagensAviao = [py.image.load('./assets/sprites/aviao0.png'),
-                             py.image.load('./assets/sprites/aviao1.png')]
-        self.imagensAbaixa = [py.image.load('./assets/sprites/1ab.png'),
-                              py.image.load('./assets/sprites/2ab.png')]
+        self.airplane = [py.image.load('./assets/sprites/airplane1.png'),
+                             py.image.load('./assets/sprites/airplane2.png')]
         self.image = py.image.load('./assets/sprites/1.png')
         self.rect = self.image.get_rect()
         self.rect[0] = 200
         self.rect[1] = 300
+        self.speedY = 4
+        self.AirplaneTime = 0
+        self.AirplaneCooldown = 0
+        self.state = 0 # 1- Run/ 2- Jump/ 3-Down/ 4- Flying 
+        self.JUMP_DURING_TIME = 14
+        self.isDead = False
         self.index = 0
-        self.speedY = 3
-        self.AviaoDeslocamento = 0
-        self. AviaoCooldown = 0
-        self.Estado = 0
-        self.Largura = 40
-        self.Altura = 43
     def update(self):
-        self.rect[1] += self.speedY
-        self.index += 1
-        if self.index >= len(self.imagens):
-            self.index = 0
-        if self.Estado == 0:
-            self.image = self.imagens[self.index]
-        
-        if Dino.Estado == 1:
-            self.image = self.imagensAbaixa[self.index]
-            self.rect[1] = 615
-
-        if Dino.Estado == 3:
-            self.image = py.image.load('DinossauroSprites/3.png')
-
-        if Dino.Estado == 4:
-            self.image = self.imagensAviao[self.index]
+        if not self.isDead:
+            if self.state == 1:
+                self.image = spriteSwap(self.imagens, 3)
+                
+            if py.key.get_pressed()[py.K_UP]:
+                if self.state == 1:
+                    self.state = 2
+            if py.key.get_pressed()[py.K_SPACE]:
+                if self.AirplaneCooldown < 1:
+                    self.state = 4            
+        else:      
+            self.rect[0] -= Velocity
+    
+        dinoBehavior()
 
 dino_group = py.sprite.Group()
 Dino = Dinossauro()
-dino_group.add(Dino)
+dino_group.add(Dino)     
+                    
+JUMP_DURING_TIME = 0
+def dinoBehavior():
+    if Dino.state == 0:
+        Dino.rect[1] += Dino.speedY
 
+    if Dino.state == 2:
+            Dino.image = Dino.imagens[0]
+            if Dino.JUMP_DURING_TIME > 0:
+                Dino.JUMP_DURING_TIME -= 1
+                Dino.rect[1] -= 6
+            else:
+                Dino.state = 0
+                if py.key.get_pressed()[py.K_DOWN]:
+                    Dino.rect[1] += 3         
 
+    if Dino.state == 4:
+        Dino.image = spriteSwap(Dino.airplane)
+        if Dino.AirplaneTime <= 820:
+            Dino.AirplaneTime += Velocity
+            if Dino.AirplaneTime <= 50:
+                Dino.rect[1] -= 5      
+        else:
+            Dino.state = 0
+            Dino.AirplaneTime = 0    
+            Dino.Cooldown = 2000
+    else:
+        Dino.AirplaneCooldown -= Velocity 
