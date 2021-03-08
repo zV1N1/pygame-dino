@@ -23,7 +23,11 @@ class Dinossauro(py.sprite.Sprite):
     def update(self):
         if not self.isDead:
             if self.state == 1:
-                self.image = spriteSwap(self.imagens, 3)
+                self.image = spriteSwap(self.imagens, 5, self.index)
+                self.index += 1
+                if self.index >= 2:
+                    self.index = 0
+                
                 
             if py.key.get_pressed()[py.K_UP]:
                 if self.state == 1:

@@ -13,10 +13,6 @@ py.init()
 
 screen = py.display.set_mode((width, heigth))
 
-    
-
-
-
 
 clock = py.time.Clock()
 while True:
@@ -26,7 +22,7 @@ while True:
             py.quit()
 
     screen.fill(color["Black"])
-    
+
     renderCloud()  
     generatorObstacle()
     updateMessage(screen)

@@ -56,19 +56,23 @@ def updateMessage(screen):
     if currentDistance > 1200 and currentDistance < 2000:
         screen.blit(py.image.load(reference), (-120, 300))
 
-
+index = 0
 def restart(screen):
-    images = ['assets/sprites/Replay2.png',
-                'assets/sprites/Replay3.png',
-                'assets/sprites/Replay4.png',
-                'assets/sprites/Replay1.png']
+    global index
+    images = [py.image.load('assets/sprites/Replay2.png'),
+                py.image.load('assets/sprites/Replay3.png'),
+                py.image.load('assets/sprites/Replay4.png'),
+                py.image.load('assets/sprites/Replay1.png')]
     game_over = 'assets/sprites/game_over.png'
     
     if Dino.isDead: 
-        restart = spriteSwap(images, 10)
-
+        index += 1
+        restart = spriteSwap(images, 10, index)
+        if index >= 3:
+            index = 0
+        
+        screen.blit(restart, (350, heigth/2))  
         screen.blit(py.image.load(game_over), (220, 250))
-        screen.blit(py.image.load(restart), (350, heigth/2))  
         if insideRestart():
             if py.mouse.get_pressed()[0]:
                 InitializeNewMatch()

@@ -19,8 +19,12 @@ class Ptera(py.sprite.Sprite):
         
         if self.rect[0] < 0:
             self.kill()
+        
+        self.index += 1
+        if self.index >= 2:
+            self.index = 0
 
-        self.image = spriteSwap(self.imagens, 6)
+        self.image = spriteSwap(self.imagens, 6, self.index)
 
 
 class Cactus(py.sprite.Sprite):
