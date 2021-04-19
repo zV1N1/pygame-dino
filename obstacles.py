@@ -14,17 +14,21 @@ class Ptera(py.sprite.Sprite):
         self.rect[1] = choice(y)
         self.speedX = randrange(4, 6) + Velocity / 2
         self.index = 0
+        self.time = 5
+
     def update(self):
         self.rect[0] -= self.speedX
         
         if self.rect[0] < 0:
             self.kill()
         
-        self.index += 1
-        if self.index >= 2:
-            self.index = 0
-
-        self.image = spriteSwap(self.imagens, 6, self.index)
+        self.time -= 1
+        if self.time == 0:
+            self.image = spriteSwap(self.imagens, self.index)
+            self.index += 1
+            if self.index >= 2:
+                self.index = 0
+            self.time = 15
 
 
 class Cactus(py.sprite.Sprite):

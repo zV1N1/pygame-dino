@@ -13,15 +13,9 @@ color = {"Black":(0,0,0),"White":(255,255,255)}
 reference = 'assets/sprites/ok.png'
 
 
-time = 1
-def spriteSwap(group, interval=5, i=0):
-    global time
+def spriteSwap(sprites, index = 0):
+
+    return sprites[index]
     
-    time -= 1
-    image = group[0]
-    if time == 0:
-        time = interval
-        image = group[i]
-    return image
 
     

@@ -56,28 +56,56 @@ def updateMessage(screen):
     if currentDistance > 1200 and currentDistance < 2000:
         screen.blit(py.image.load(reference), (-120, 300))
 
-index = 0
-def restart(screen):
-    global index
-    images = [py.image.load('assets/sprites/Replay2.png'),
+
+class Restart(py.sprite.Sprite):
+    def __init__(self):
+        py.sprite.Sprite.__init__(self)
+        self.images = [py.image.load('assets/sprites/Replay2.png'),
                 py.image.load('assets/sprites/Replay3.png'),
                 py.image.load('assets/sprites/Replay4.png'),
                 py.image.load('assets/sprites/Replay1.png')]
-    game_over = 'assets/sprites/game_over.png'
-    
-    if Dino.isDead: 
-        index += 1
-        restart = spriteSwap(images, 10, index)
-        if index >= 3:
-            index = 0
-        
-        screen.blit(restart, (350, heigth/2))  
-        screen.blit(py.image.load(game_over), (220, 250))
-        if insideRestart():
-            if py.mouse.get_pressed()[0]:
-                InitializeNewMatch()
 
+        self.image = py.image.load('assets/sprites/Replay2.png')
+        self.game_over = 'assets/sprites/game_over.png'
+        self.rect = self.image.get_rect()
+        self.rect[0] = 350
+        self.rect[1] = heigth/2
+        self.index = 0
+        self.time = 15
+
+    def update(self, screen):
+        if Dino.isDead: 
+            self.time -= 1
+            restart_group.draw(screen)
+            screen.blit(py.image.load(self.game_over), (220, 250))
+            if self.time == 0:
+                self.image = spriteSwap(self.images, self.index)
+                self.index += 1
+                if self.index >= len(self.images):
+                    self.index = 0
+                self.time = 15
+
+            if insideRestart():
+                if py.mouse.get_pressed()[0]:
+                    InitializeNewMatch()
+    def draw(self):
+        print(1)
+
+restart_group = py.sprite.Group()
+res = Restart()
+restart_group.add(res)    
+
+# if the mouse is within the coordinates of the restant
+def insideRestart():
+    isTrue = 0
+    if py.mouse.get_pos()[0] > 350 and py.mouse.get_pos()[0] < 440:
+        isTrue += 1
+    if py.mouse.get_pos()[1] > 300 and py.mouse.get_pos()[1] < 380:
+         isTrue += 1
     
+    return isTrue == 2    
+        
+# Initialize New Game
 def InitializeNewMatch():
     global Velocity
     global currentDistance
@@ -92,13 +120,3 @@ def InitializeNewMatch():
     py.sprite.Group.empty(spike_group) 
     py.sprite.Group.empty(ptera_group)
  
-
-def insideRestart():
-    isTrue = 0
-    if py.mouse.get_pos()[0] > 350 and py.mouse.get_pos()[0] < 440:
-        isTrue += 1
-    if py.mouse.get_pos()[1] > 300 and py.mouse.get_pos()[1] < 380:
-         isTrue += 1
-    
-    return isTrue == 2
-

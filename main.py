@@ -1,7 +1,7 @@
 import pygame as py
 from player import dino_group
 from background import ground_group, cloud_group, renderCloud
-from constants import updateMessage, colisionEnemies, restart
+from constants import updateMessage, colisionEnemies, restart_group
 
 from config import (width, heigth, color, FPS)
 
@@ -12,7 +12,6 @@ ptera_group, spike_group)
 py.init()
 
 screen = py.display.set_mode((width, heigth))
-
 
 clock = py.time.Clock()
 while True:
@@ -27,8 +26,8 @@ while True:
     generatorObstacle()
     updateMessage(screen)
     colisionEnemies()
-    restart(screen)
-
+    
+    restart_group.update(screen)
     cactus_group.update()
     ptera_group.update()
     dino_group.update()

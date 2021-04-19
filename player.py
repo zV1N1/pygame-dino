@@ -23,12 +23,13 @@ class Dinossauro(py.sprite.Sprite):
     def update(self):
         if not self.isDead:
             if self.state == 1:
-                self.image = spriteSwap(self.imagens, 5, self.index)
+                # self.image = spriteSwap(self.imagens, 5, self.index)
+                self.image = spriteSwap(self.imagens, self.index)
                 self.index += 1
                 if self.index >= 2:
                     self.index = 0
                 
-                
+                # Jump
             if py.key.get_pressed()[py.K_UP]:
                 if self.state == 1:
                     self.state = 2
@@ -37,6 +38,13 @@ class Dinossauro(py.sprite.Sprite):
                     self.state = 4            
         else:      
             self.rect[0] -= Velocity
+
+        # state airplane
+        if (self.state == 4):
+            Dino.image = spriteSwap(Dino.airplane, self.index)
+            self.index += 1
+            if (self.index >= 2):
+                self.index = 0
     
         dinoBehavior()
 
@@ -60,7 +68,6 @@ def dinoBehavior():
                     Dino.rect[1] += 3         
 
     if Dino.state == 4:
-        Dino.image = spriteSwap(Dino.airplane)
         if Dino.AirplaneTime <= 820:
             Dino.AirplaneTime += Velocity
             if Dino.AirplaneTime <= 50:
