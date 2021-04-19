@@ -16,12 +16,16 @@
 
 # Description
 
-The project was a recreated and altered version of the famous Chrome T-Rex game made in Python 3
+The project was a recreated and altered version of the famous Chrome T-Rex game made in Python 3.
 
 
 # Technology
 
-Built using **pygame** library
+Built using **pygame** library.
+
+# Executable
+
+Inside the build folder is the project's executable, you can run it even if you don't have python or pygame installed on your device, it's naming it **main.exe**.
 
 
 # Instructions and Prerequisites:
@@ -32,17 +36,21 @@ Built using **pygame** library
 
 
 if you don't have pygame installed, run the command on the terminal
-```bash
+```python
     $ pip install -U pygame
 ```
 - clone the repository
 ```bash
-    $ git clone 
+    $ git clone https://github.com/zV1N1/pygame-dino.git
 ```
 
 
 # Controls
 
-- Press UP or SPACE to make T-Rex jump over the obstacles
-- Press DOWN key to crouch
+- Press UP to make T-Rex jump over the obstacles
+- Press SPACE to airplane.
 - Avoid getting hit by obstacles.
+
+---
+
+<h4 align="center"> <em>&lt;/&gt;</em> by <a href="https://github.com/zV1N1" target="_blank">zV1N1</a> </h4>
